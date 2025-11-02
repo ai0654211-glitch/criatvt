@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - معرض الأعمال</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-form">
+            <h2>🔒 تسجيل الدخول</h2>
+            <p>يجب عليك تسجيل الدخول للوصول إلى لوحة الإدارة</p>
+            <div class="form-group">
+                <label for="adminPassword">كلمة المرور:</label>
+                <input type="password" id="adminPassword" placeholder="أدخل كلمة المرور">
+            </div>
+            <button onclick="login()">دخول</button>
+            <p id="loginError" style="color: red; display: none;">كلمة المرور غير صحيحة</p>
+        </div>
+    </div>
+
+    <!-- لوحة الإدارة (مخفي في البداية) -->
+    <div id="adminPanel" class="admin-container" style="display: none;">
+        <header>
+            <h1>لوحة إدارة الموقع</h1>
+            <nav>
+                <button class="tab-button active" data-tab="projects">إدارة المشاريع</button>
+                <button class="tab-button" data-tab="messages">الرسائل (<span id="messages-count">0</span>)</button>
+                <button class="tab-button logout-btn" onclick="logout()">خروج</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- قسم إدارة المشاريع -->
+            <section id="projects" class="tab-content active">
+                <h2>إدارة المشاريع</h2>
+
+                <!-- قسم إضافة المشاريع -->
+                <div class="form-section">
+                    <h3>إضافة مشروع جديد</h3>
+                    <form id="project-form">
+                        <div class="form-group">
+                            <label for="title">عنوان المشروع:</label>
+                            <input type="text" id="title" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">وصف المشروع:</label>
+                            <textarea id="description" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category">التصنيف:</label>
+                            <select id="category" required onchange="toggleSubCategory()">
+                                <option value="graphic-design">جرافيك ديزاين</option>
+                                <option value="electronic-invitations">دعوات إلكترونية</option>
+                                <option value="web-development">ويب ديفلوبمنت</option>
+                            </select>
+                        </div>
+
+                        <!-- حقل التصنيف الفرعي -->
+                        <div id="subCategoryGroup" style="display: none;">
+                            <div class="form-group">
+                                <label for="subCategory">نوع الدعوة:</label>
+                                <select id="subCategory" class="form-control" required>
+                                    <option value="all">جميع الأعمال</option>
+                                    <option value="wedding">دعوات زواج</option>
+                                    <option value="baby">بشارة مولود</option>
+                                    <option value="engagement">عقد قران</option>
+                                    <option value="congratulations">تهنئة</option>
+                                    <option value="reception">استقبال</option>
+                                    <option value="graduation">تخرج</option>
+                                    <option value="promotion">ترقية</option>
+                                    <option value="queen-party">حفل ملكة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="imageUrl">رابط الصورة:</label>
+                            <input type="url" id="imageUrl" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectUrl">رابط المشروع (اختياري):</label>
+                            <input type="url" id="projectUrl">
+                        </div>
+
+                        <button type="submit">إضافة المشروع</button>
+                    </form>
+                </div>
+
+                <div class="projects-list">
+                    <h3>المشاريع الحالية (<span id="projects-count">0</span>)</h3>
+                    <div id="projects-container"></div>
+                </div>
+            </section>
+
+            <!-- قسم الرسائل -->
+            <section id="messages" class="tab-content">
+                <h2>الرسائل الواردة (<span id="messages-tab-count">0</span>)</h2>
+                <div id="messages-container"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
